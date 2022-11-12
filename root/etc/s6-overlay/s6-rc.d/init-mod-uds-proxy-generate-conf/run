@@ -1,8 +1,13 @@
 #!/usr/bin/with-contenv bash
 
-__nginx_conf_target="/etc/nginx/nginx.conf"
+__nginx_conf_target=${UDS_PROXY_CONF_LOCATION:-"/etc/nginx"}
 
 echo "[UDS_proxy] generating nginx configuration"
+
+if [ ! -d $__nginx_conf_target ]; then
+  echo "$__nginx_conf_target does not exist! attempting to create it"
+  mkdir -p $__nginx_conf_target
+fi
 
 # write the start of the nginx.conf file
 echo 'events {
