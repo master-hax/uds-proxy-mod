@@ -1,0 +1,48 @@
+#!/usr/bin/with-contenv bash
+
+## Ubuntu
+if [ -f /usr/bin/apt ]; then
+
+fi
+# Alpine
+if [ -f /sbin/apk ]; then
+    echo "alpine"
+fi
+
+echo "requesting nginx be installed"
+
+echo "nginx" >> /mod-repo-packages-to-install.list
+
+echo 'events {
+    worker_connections 1024;
+}
+
+http {' >> ./bungus
+
+
+__sock_location=${UDS_PROXY_SOCK_LOCATION:-/comm}
+env | while IFS= read -r line; do
+  env_value=${line#*=}
+  env_name=${line%%=*}
+#   echo "V: $value N: $name"
+  if [[ "$env_name" =~ ^UDS_PROXY_HOST_([0-9A-Za-z_]+)$ ]]; then
+    __sock_name=${BASH_REMATCH[1]}
+    __target=$env_value
+    echo "proxying $__target to $__sock_location/$__sock_name.sock"
+    echo  "
+    server {
+       listen unix:$__sock_location/$__sock_name.sock;
+
+       proxy_set_header Host \$host;
+       proxy_set_header X-Forwarded-For \$remote_addr;
+
+       location / {
+           proxy_pass http://$__target;
+       }
+    }">> ./bungus
+  fi
+
+done
+
+echo '
+}' >> ./bungus
