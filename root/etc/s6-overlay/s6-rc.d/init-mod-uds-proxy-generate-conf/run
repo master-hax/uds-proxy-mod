@@ -1,24 +1,24 @@
 #!/usr/bin/with-contenv bash
 
-__nginx_conf_target=${UDS_PROXY_CONF_LOCATION:-"/etc/nginx"}
+__nginx_conf_target=${UDS_PROXY_CONF_LOCATION:-"/usr/local/nginx/conf"}
 
-echo "[UDS_proxy] generating nginx configuration at $__nginx_conf_target"
+echo "[UDS_PROXY] generating nginx configuration at $__nginx_conf_target"
 
 if [ ! -d "$__nginx_conf_target" ]; then
   echo "$__nginx_conf_target does not exist! attempting to create it"
   mkdir -p $__nginx_conf_target
 fi
 
-__nginx_conf_file="$__nginx_conf_target""/nginx.conf"
+__nginx_conf_filename="$__nginx_conf_target""/nginx.conf"
 
 # write the start of the nginx.conf file
 echo 'events {
     worker_connections 1024;
 }
 
-http {' >> $__nginx_conf_file
+http {' >> $__nginx_conf_filename
 
-# write the proxy configurations
+# write the proxy configurations in the middle of the nginx.conf file
 __sock_location=${UDS_PROXY_SOCK_LOCATION:-/comm}
 env | while IFS= read -r line; do
   __env_value=${line#*=}
@@ -37,12 +37,13 @@ env | while IFS= read -r line; do
        location / {
            proxy_pass http://$__target;
        }
-    }">> $__nginx_conf_file
+    }">> $__nginx_conf_filename
   fi
 
 done
 
+# write the end of the nginx.conf file
 echo '
-}' >> $__nginx_conf_file
+}' >> $__nginx_conf_filename
 
-echo "[UDS_proxy] nginx configuration written to $__nginx_conf_file"
+echo "[UDS_PROXY] wrote nginx configuration to $__nginx_conf_filename"
