@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+
+## Ubuntu
+if [ -f /usr/bin/apt ]; then
+    echo "traceroute" >> /mod-repo-packages-to-install.list
+
+fi
+# Alpine
+if [ -f /sbin/apk ]; then
+    echo "haha"
