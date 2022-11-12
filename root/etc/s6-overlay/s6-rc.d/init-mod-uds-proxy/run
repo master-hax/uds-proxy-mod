@@ -8,5 +8,5 @@ fi
 # Alpine
 if [ -f /sbin/apk ]; then
     echo "alpine"
-
+fi
 echo "nginx" >> /mod-repo-packages-to-install.list
