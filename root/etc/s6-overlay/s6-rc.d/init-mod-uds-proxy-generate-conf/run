@@ -2,7 +2,7 @@
 
 __nginx_conf_target=${UDS_PROXY_CONF_LOCATION:-"/etc/nginx"}
 
-echo "[UDS_proxy] generating nginx configuration"
+echo "[UDS_proxy] generating nginx configuration at $__nginx_conf_target"
 
 if [ ! -d "$__nginx_conf_target" ]; then
   echo "$__nginx_conf_target does not exist! attempting to create it"
