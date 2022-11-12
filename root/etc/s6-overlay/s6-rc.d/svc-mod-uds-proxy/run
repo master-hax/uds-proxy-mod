@@ -1,3 +1,3 @@
 #!/usr/bin/with-contenv bash
 
-echo "starting nginx" && nginx
+echo "starting nginx" && exec s6-setuidgid abc nginx
