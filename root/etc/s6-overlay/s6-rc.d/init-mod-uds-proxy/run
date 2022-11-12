@@ -9,5 +9,6 @@ fi
 if [ -f /sbin/apk ]; then
     echo "alpine"
 fi
+
 echo "nginx" >> /mod-repo-packages-to-install.list
-mkdir -p /etc/nginx && mv /default/nginx.conf /etc/nginx/nginx.conf && echo "moved the thing"
+# mkdir -p /etc/nginx && mv /default/nginx.conf /etc/nginx/nginx.conf && echo "moved the thing"
