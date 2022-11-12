@@ -4,17 +4,19 @@ __nginx_conf_target=${UDS_PROXY_CONF_LOCATION:-"/etc/nginx"}
 
 echo "[UDS_proxy] generating nginx configuration"
 
-if [ ! -d $__nginx_conf_target ]; then
+if [ ! -d "$__nginx_conf_target" ]; then
   echo "$__nginx_conf_target does not exist! attempting to create it"
   mkdir -p $__nginx_conf_target
 fi
+
+__nginx_conf_file="{$__nginx_conf_target}/nginx.conf"
 
 # write the start of the nginx.conf file
 echo 'events {
     worker_connections 1024;
 }
 
-http {' >> $__nginx_conf_target
+http {' >> $__nginx_conf_file
 
 # write the proxy configurations
 __sock_location=${UDS_PROXY_SOCK_LOCATION:-/comm}
@@ -35,12 +37,12 @@ env | while IFS= read -r line; do
        location / {
            proxy_pass http://$__target;
        }
-    }">> $__nginx_conf_target
+    }">> $__nginx_conf_file
   fi
 
 done
 
 echo '
-}' >> $__nginx_conf_target
+}' >> $__nginx_conf_file
 
-echo "[UDS_proxy] nginx configuration written to $__nginx_conf_target"
+echo "[UDS_proxy] nginx configuration written to $__nginx_conf_file"
