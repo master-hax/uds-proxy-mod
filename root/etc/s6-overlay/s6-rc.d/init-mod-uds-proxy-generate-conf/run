@@ -9,7 +9,7 @@ if [ ! -d "$__nginx_conf_target" ]; then
   mkdir -p $__nginx_conf_target
 fi
 
-__nginx_conf_file="{$__nginx_conf_target}/nginx.conf"
+__nginx_conf_file="$__nginx_conf_target""/nginx.conf"
 
 # write the start of the nginx.conf file
 echo 'events {
