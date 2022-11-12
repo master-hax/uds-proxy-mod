@@ -2,10 +2,11 @@
 
 ## Ubuntu
 if [ -f /usr/bin/apt ]; then
-    echo "trololol"
-    echo "traceroute" >> /mod-repo-packages-to-install.list
+    echo "ubuntu"
 
 fi
 # Alpine
 if [ -f /sbin/apk ]; then
-    echo "haha"
+    echo "alpine"
+
+echo "nginx" >> /mod-repo-packages-to-install.list
