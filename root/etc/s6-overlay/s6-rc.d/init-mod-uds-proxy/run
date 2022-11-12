@@ -2,6 +2,7 @@
 
 ## Ubuntu
 if [ -f /usr/bin/apt ]; then
+    echo "trololol"
     echo "traceroute" >> /mod-repo-packages-to-install.list
 
 fi
