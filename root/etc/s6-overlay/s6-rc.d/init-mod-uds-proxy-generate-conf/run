@@ -1,11 +1,15 @@
 #!/usr/bin/with-contenv bash
 
+# Script to generate an nginx configuraton file for unix domain socket -> http proxying
+# Vivek Revankar (vivek@revankar.net)
+
+
 __nginx_conf_target=${UDS_PROXY_CONF_LOCATION:-"/etc/nginx"}
 
 echo "[UDS_PROXY] generating nginx configuration at $__nginx_conf_target"
 
 if [ ! -d "$__nginx_conf_target" ]; then
-  echo "$__nginx_conf_target does not exist! attempting to create it"
+  echo "[UDS_PROXY] $__nginx_conf_target does not exist! attempting to create it"
   mkdir -p $__nginx_conf_target
 fi
 
@@ -26,7 +30,7 @@ env | while IFS= read -r line; do
   if [[ "$__env_name" =~ ^UDS_PROXY_HOST_([0-9A-Za-z_]+)$ ]]; then
     __sock_name=${BASH_REMATCH[1]}
     __target=$__env_value
-    echo "proxying $__target to $__sock_location/$__sock_name.sock"
+    echo "[UDS_PROXY] configuring proxy to $__target from $__sock_location/$__sock_name.sock"
     echo  "
     server {
        listen unix:$__sock_location/$__sock_name.sock;
