@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-__nginx_conf_target=${UDS_PROXY_CONF_LOCATION:-"/usr/local/nginx/conf"}
+__nginx_conf_target=${UDS_PROXY_CONF_LOCATION:-"/etc/nginx"}
 
 echo "[UDS_PROXY] generating nginx configuration at $__nginx_conf_target"
 
