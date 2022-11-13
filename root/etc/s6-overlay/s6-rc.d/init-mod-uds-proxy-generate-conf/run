@@ -15,17 +15,12 @@ fi
 
 __nginx_conf_filename="$__nginx_conf_target""/nginx.conf"
 
-if [ -f "$__nginx_conf_filename"]; then
-  echo "[UDS_PROXY] nginx.conf already exists. skipping conf generation."
-  return 0
-fi
-
 # write the start of the nginx.conf file
 echo 'events {
     worker_connections 1024;
 }
 
-http {' >> $__nginx_conf_filename
+http {' > $__nginx_conf_filename
 
 # write the proxy configurations in the middle of the nginx.conf file
 __sock_location=${UDS_PROXY_SOCK_LOCATION:-/comm}
