@@ -1,6 +1,6 @@
 # uds-proxy-mod
 
-a [Docker Mod](https://github.com/linuxserver/docker-mods) for [linuxserver.io](https://www.linuxserver.io/) containers that installs nginx & sets it up to proxy HTTP services to Unix Domain Socket, allowing for direct container to container communication.
+a [Docker Mod](https://github.com/linuxserver/docker-mods) for [linuxserver.io](https://www.linuxserver.io/) containers that installs nginx & sets it up to proxy HTTP services to [Unix domain sockets](https://en.wikipedia.org/wiki/Unix_domain_socket), allowing for direct container to container communication.
 
 ## setup
 
